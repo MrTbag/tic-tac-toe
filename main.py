@@ -47,6 +47,11 @@ class Game:
             player_x = int(input("x = "))
             player_y = int(input("y = "))
             move = (player_x, player_y)
+            while not self.is_move_valid(move):
+                print("Invalid move! Try again:")
+                player_x = int(input("x = "))
+                player_y = int(input("y = "))
+                move = (player_x, player_y)
         else:
             time.sleep(1)
             move = self.computer_move()
@@ -98,6 +103,9 @@ class Game:
         y = (point[1] + 2) % self.board.n - 1
 
         return x, y
+
+    def is_move_valid(self, move):
+        return (1 <= move[0] <= self.board.m) and (1 <= move[1] <= self.board.n)
 
 
 class Menu:
