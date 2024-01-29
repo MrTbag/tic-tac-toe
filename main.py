@@ -35,6 +35,8 @@ class Game:
         self.winner = ""
 
     def start(self):
+        self.board.print_board()
+
         while self.winner == "":
             self.next_turn()
 
@@ -61,6 +63,9 @@ class Game:
         else:
             time.sleep(1)
             move = self.computer_move()
+
+        self.board.loc[move[0]][move[1]] = self.character[self.turn]
+        self.board.print_board()
 
         if self.check_winner(move):
             self.winner = self.player_name[self.turn]
@@ -155,6 +160,7 @@ class Menu:
         else:
             self.message = 'Invalid input! Try again\n'
             self.run()
+
 
 menu = Menu()
 menu.run()
