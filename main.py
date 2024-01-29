@@ -44,8 +44,8 @@ class Game:
         self.turn ^= 1
         if self.turn:
             print("What's your move?")
-            player_x = input("x = ")
-            player_y = input("y = ")
+            player_x = int(input("x = "))
+            player_y = int(input("y = "))
             move = (player_x, player_y)
         else:
             time.sleep(1)
