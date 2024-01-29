@@ -14,7 +14,13 @@ class Board:
     def __init__(self, n, m):
         self.n = n
         self.m = m
-        self.loc = [['*' for i in range(m)] for j in range(n)]
+        self.loc = [['*' for i in range(n)] for j in range(m)]
+
+    def print_board(self):
+        for i in range(self.n):
+            for j in range(self.m):
+                print(self.loc[j][i], end=" ")
+            print()
 
 
 class Game:
@@ -149,7 +155,6 @@ class Menu:
         else:
             self.message = 'Invalid input! Try again\n'
             self.run()
-
 
 menu = Menu()
 menu.run()
