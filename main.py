@@ -51,15 +51,15 @@ class Game:
     def next_turn(self):
         self.turn ^= 1
         if self.turn:
-            print("What's your move?")
+            print("What's your move? Choose x between 1 and {0} and y between 1 and {1}".format(self.board.m, self.board.n))
             player_x = int(input("x = "))
             player_y = int(input("y = "))
-            move = (player_x, player_y)
+            move = (player_x - 1, player_y - 1)
             while not self.is_move_valid(move):
                 print("Invalid move! Try again:")
                 player_x = int(input("x = "))
                 player_y = int(input("y = "))
-                move = (player_x, player_y)
+                move = (player_x - 1, player_y - 1)
         else:
             time.sleep(1)
             move = self.computer_move()
@@ -74,11 +74,11 @@ class Game:
         return
 
     def computer_move(self):
-        x = random.randint(1, self.board.m)
-        y = random.randint(1, self.board.n)
+        x = random.randint(0, self.board.m - 1)
+        y = random.randint(0, self.board.n - 1)
         while self.board.loc[x][y] != '*':
-            x = random.randint(1, self.board.m)
-            y = random.randint(1, self.board.n)
+            x = random.randint(0, self.board.m - 1)
+            y = random.randint(0, self.board.n - 1)
 
         self.board.loc[x][y] = 'X'
 
@@ -87,14 +87,14 @@ class Game:
     def check_winner(self, move):
         # check row
         win1 = True
-        for x in range(1, self.board.m + 1):
+        for x in range(self.board.m):
             if self.board.loc[x][move[1]] == Game.character[self.turn ^ 1]:
                 win1 = False
                 break
 
         # check column
         win2 = True
-        for y in range(1, self.board.n + 1):
+        for y in range(self.board.n):
             if self.board.loc[move[0]][y] == Game.character[self.turn ^ 1]:
                 win2 = False
                 break
@@ -103,7 +103,7 @@ class Game:
         win3 = True
         next_point = self.next_diagonal(move)
         while next_point != move:
-            if self.board[next_point[0]][next_point[1]] == Game.character[self.turn ^ 1]:
+            if self.board.loc[next_point[0]][next_point[1]] == Game.character[self.turn ^ 1]:
                 win3 = False
                 break
 
@@ -116,7 +116,7 @@ class Game:
         return x, y
 
     def is_move_valid(self, move):
-        return (1 <= move[0] <= self.board.m) and (1 <= move[1] <= self.board.n)
+        return (0 <= move[0] < self.board.m) and (0 <= move[1] < self.board.n)
 
 
 class Menu:
