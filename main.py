@@ -7,7 +7,37 @@ class Player:
         self.name = name
 
     def update_history(self, winner):
-        pass
+        history = open("history.txt", "r")
+        lines = history.readlines()
+
+        is_new = True
+        for i, line in enumerate(lines):
+            tokens = line.split()
+            if tokens[0] == self.name:
+                is_new = False
+                index = i
+                win_num = tokens[1].split(':')[1]
+                loss_num = tokens[2].split(':')[1]
+                lines.remove(line)
+                if winner == self.name:
+                    win_num += 1
+                else:
+                    loss_num += 1
+                new_line = "{0}\twins:{1}\tlosses:{2}".format(self.name, win_num, loss_num)
+                lines.insert(index, new_line)
+                break
+
+        history.close()
+
+        if not is_new:
+            history = open("history.txt", "w")
+            history.writelines(lines)
+        else:
+            history = open("history.txt", "w+")
+            if winner == self.name:
+                history.write("{0}\twins:{1}\tlosses:{2}".format(self.name, 1, 0))
+            else:
+                history.write("{0}\twins:{1}\tlosses:{2}".format(self.name, 0, 1))
 
 
 class Board:
