@@ -16,8 +16,8 @@ class Player:
             if tokens[0] == self.name:
                 is_new = False
                 index = i
-                win_num = tokens[1].split(':')[1]
-                loss_num = tokens[2].split(':')[1]
+                win_num = int(tokens[1].split(':')[1])
+                loss_num = int(tokens[2].split(':')[1])
                 lines.remove(line)
                 if winner == self.name:
                     win_num += 1
@@ -149,11 +149,11 @@ class Game:
 
         # check diagonal mode 0
         # bottom-right
-        valid3 = False
+        diagonal3_num = 0
         win3 = True
         next_point = self.board.next_diagonal(move, 0, 1)
         while self.board.is_point_valid(next_point):
-            valid3 = True
+            diagonal3_num += 1
             if self.board.loc[next_point[0]][next_point[1]] != Game.character[self.turn]:
                 win3 = False
                 break
@@ -162,21 +162,20 @@ class Game:
         # top-left
         next_point = self.board.next_diagonal(move, 0, -1)
         while self.board.is_point_valid(next_point):
-            valid3 = True
+            diagonal3_num += 1
             if self.board.loc[next_point[0]][next_point[1]] != Game.character[self.turn]:
                 win3 = False
                 break
             next_point = self.board.next_diagonal(next_point, 0, -1)
 
-        win3 = win3 and valid3
-
+        win3 = win3 and (diagonal3_num == min(self.board.m, self.board.n))
         # check diagonal mode 1
         # top-right
-        valid4 = False
+        diagonal4_num = 0
         win4 = True
         next_point = self.board.next_diagonal(move, 1, 1)
         while self.board.is_point_valid(next_point):
-            valid4 = True
+            diagonal4_num += 1
             if self.board.loc[next_point[0]][next_point[1]] != Game.character[self.turn]:
                 win4 = False
                 break
@@ -185,13 +184,13 @@ class Game:
         # bottom-left
         next_point = self.board.next_diagonal(move, 1, -1)
         while self.board.is_point_valid(next_point):
-            valid4 = True
+            diagonal4_num += 1
             if self.board.loc[next_point[0]][next_point[1]] != Game.character[self.turn]:
                 win4 = False
                 break
             next_point = self.board.next_diagonal(next_point, 1, -1)
 
-        win4 = win4 and valid4
+        win4 = win4 and (diagonal4_num == min(self.board.m, self.board.n))
 
         return win1 or win2 or win3 or win4
 
@@ -240,7 +239,6 @@ class Menu:
         else:
             self.message = 'Invalid input! Try again\n'
             self.run()
-
 
 menu = Menu()
 menu.run()
