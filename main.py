@@ -35,16 +35,16 @@ class Player:
         else:
             history = open("history.txt", "a+")
             if winner == self.name:
-                history.write("\n{0}\twins:{1}\tlosses:{2}".format(self.name, 1, 0))
+                history.write("{0}\twins:{1}\tlosses:{2}\n".format(self.name, 1, 0))
             else:
-                history.write("\n{0}\twins:{1}\tlosses:{2}".format(self.name, 0, 1))
+                history.write("{0}\twins:{1}\tlosses:{2}\n".format(self.name, 0, 1))
 
 
 class Board:
     def __init__(self, n, m):
         self.n = n
         self.m = m
-        self.loc = [['*' for i in range(n)] for j in range(m)]
+        self.loc = [['*' for _ in range(n)] for _ in range(m)]
 
     def print_board(self):
         for i in range(self.n):
@@ -108,6 +108,7 @@ class Game:
                 player_y = int(input("y = "))
                 move = (player_x - 1, player_y - 1)
         else:
+            print("Computer's turn:")
             time.sleep(1)
             move = self.computer_move()
 
@@ -168,7 +169,8 @@ class Game:
                 break
             next_point = self.board.next_diagonal(next_point, 0, -1)
 
-        win3 = win3 and (diagonal3_num == min(self.board.m, self.board.n))
+        win3 = win3 and (diagonal3_num == min(self.board.m, self.board.n) - 1)
+        
         # check diagonal mode 1
         # top-right
         diagonal4_num = 0
@@ -190,7 +192,7 @@ class Game:
                 break
             next_point = self.board.next_diagonal(next_point, 1, -1)
 
-        win4 = win4 and (diagonal4_num == min(self.board.m, self.board.n))
+        win4 = win4 and (diagonal4_num == min(self.board.m, self.board.n) - 1)
 
         return win1 or win2 or win3 or win4
 
@@ -208,24 +210,23 @@ class Menu:
 
         if self.query == 'New Game':
             name = input("Enter your name in a single line: ")
+            m = input("Enter the number of columns(m) on the board: ")
+            n = input("Enter the number of rows(n) on the board: ")
+            while (not m.isnumeric()) or (not n.isnumeric()):
+                print("Enter integers only!")
+                m = input("Enter the number of columns(m) on the board: ")
+                n = input("Enter the number of rows(n) on the board: ")
             player = Player(name)
-            board = Board(3, 3)
+            board = Board(int(n), int(m))
             game = Game(player, board)
             game.start()
-            
 
             self.run()
 
         elif self.query == 'History':
             history = open("history.txt")
-            data = ""
+            print(history.read())
 
-            line = history.readline()
-            while line:
-                line = history.readline()
-                data = line + "\n"
-
-            print(data)
             query = input('To go back to the main menu enter "Menu"\n')
             while query != 'Menu':
                 query = input('Invalid input! Try again\n')
@@ -239,6 +240,7 @@ class Menu:
         else:
             self.message = 'Invalid input! Try again\n'
             self.run()
+
 
 menu = Menu()
 menu.run()

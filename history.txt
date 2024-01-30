@@ -1,2 +1,2 @@
-ahdi	wins:4	losses:0
-mamad	wins:1	losses:0
+mahdi	wins:3	losses:1
+abbas	wins:1	losses:0
