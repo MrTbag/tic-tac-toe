@@ -82,9 +82,14 @@ class Game:
         self.turn ^= 1
         if self.turn:
             print("What's your move? Choose x between 1 and {0} and y between 1 and {1}".format(self.board.m, self.board.n))
-            player_x = int(input("x = "))
-            player_y = int(input("y = "))
-            move = (player_x - 1, player_y - 1)
+            player_x = input("x = ")
+            player_y = input("y = ")
+            while (not player_x.isnumeric()) or (not player_y.isnumeric()):
+                print("Enter integers only!")
+                player_x = input("x = ")
+                player_y = input("y = ")
+
+            move = (int(player_x) - 1, int(player_y) - 1)
             while not self.is_move_valid(move):
                 print("Invalid move! Try again:")
                 player_x = int(input("x = "))
