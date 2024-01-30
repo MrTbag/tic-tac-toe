@@ -23,7 +23,7 @@ class Player:
                     win_num += 1
                 else:
                     loss_num += 1
-                new_line = "{0}\twins:{1}\tlosses:{2}".format(self.name, win_num, loss_num)
+                new_line = "{0}\twins:{1}\tlosses:{2}\n".format(self.name, win_num, loss_num)
                 lines.insert(index, new_line)
                 break
 
@@ -33,11 +33,11 @@ class Player:
             history = open("history.txt", "w")
             history.writelines(lines)
         else:
-            history = open("history.txt", "w+")
+            history = open("history.txt", "a+")
             if winner == self.name:
-                history.write("{0}\twins:{1}\tlosses:{2}".format(self.name, 1, 0))
+                history.write("\n{0}\twins:{1}\tlosses:{2}".format(self.name, 1, 0))
             else:
-                history.write("{0}\twins:{1}\tlosses:{2}".format(self.name, 0, 1))
+                history.write("\n{0}\twins:{1}\tlosses:{2}".format(self.name, 0, 1))
 
 
 class Board:

@@ -1,1 +1,2 @@
-ahdi	wins:1	losses:0
+ahdi	wins:4	losses:0
+mamad	wins:1	losses:0
