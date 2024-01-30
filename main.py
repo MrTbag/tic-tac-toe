@@ -81,11 +81,11 @@ class Game:
         while self.winner == "":
             self.next_turn()
 
+        self.player.update_history(self.winner)
+
         query = input("Enter 'Return' to return to the main menu:\n")
         while query != "Return":
             query = input("Invalid input! Try again:\n")
-
-        self.player.update_history(self.winner)
 
         return
 
@@ -193,7 +193,6 @@ class Game:
 
         win4 = win4 and valid4
 
-        print(win1, win2, win3, win4)
         return win1 or win2 or win3 or win4
 
 
@@ -214,6 +213,8 @@ class Menu:
             board = Board(3, 3)
             game = Game(player, board)
             game.start()
+
+            self.run()
 
         elif self.query == 'History':
             history = open("history.txt")
