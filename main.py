@@ -193,7 +193,6 @@ class Game:
 
         win4 = win4 and valid4
 
-        print(win1, win2, win3, win4)
         return win1 or win2 or win3 or win4
 
 
@@ -215,6 +214,8 @@ class Menu:
             game = Game(player, board)
             game.start()
             
+
+            self.run()
 
         elif self.query == 'History':
             history = open("history.txt")
